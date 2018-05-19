@@ -1,0 +1,14 @@
+ul li{
+	list-style-type: none;
+	display: inline-block;
+	width:20px;
+}
+ul li:hover{
+	cursor: pointer;
+}
+.selectPage{
+	background: red;
+}
+.sameLine{
+	display: inline-block;
+}
