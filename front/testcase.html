@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>用例管理</title>
+<script src="/jquery-1.10.2.js"> </script>
+<script src="/bootstrap.min.js"> </script>
+<link href="/bootstrap.css" rel="stylesheet"/>
+<script>
+var CURRENT_PAGE = 1;
+$(function(){
+	selALLCase();
+	selAllProject();
+});
+function selALLCase(testcaseName,modelId){
+	var param={
+			testcaseName:testcaseName,
+			modelId:modelId,
+			currentPage:CURRENT_PAGE,
+			pageSize:$('#selectV option:selected').val()
+
+			}		
+				  $.ajax({
+						type : 'POST',
+						url :'back/home/selectCaseBySearch',
+						async : false,
+						contentType : "application/json; charset=utf-8",
+						data : JSON.stringify(param),
+						dataType : "json",
+						success : function(result) {
+							//debugger;
+	                        var data=result.data;
+	                         $("#startdata")[0].innerText = result.startdate;
+	                         $("#lastdata")[0].innerText=result.lastdate>result.total?result.total:result.lastdate;
+	                          $("#totaldata")[0].innerText=result.total;
+	                         
+							//data.forEach(function(obj){
+							var _html2='';
+							_html2 += "<tr>" +"<td>用例id<td/>"
+						      +"<td>用例名称<td/>"
+						      +"</tr>";
+							var _html =' ';
+							data.forEach(function(obj){
+							_html +=  "<tr>"
+							      +"<td>"+obj.testcaseId+"<td/>"
+							      +"<td>"+obj.testcaseName+"<td/>"
+								  +"<td onclick=\"deletecaseById('"+obj.testcaseId+"')\">删除</td>"
+								  +"<td onclick=\"updateCaseByCaseid('"+obj.testcaseId+"')\">修改</td>"
+							      +"</tr>"	
+							});
+							$("#caseALL").html(_html2).append(_html);
+
+
+                             var  last=result.last;
+                             var _html="";
+							 for(var i=1;i<=last;i++){
+							 	_html+="<li>"+i+"</li>"
+							 }
+							$("#pageshow").html(_html);
+							
+				        //});
+			        }
+			      });
+			     }
+				 
+function  pagesel(val){
+     CURRENT_PAGE += val;
+    selALLCase($('#caseName').val(),$('#ModelSelect option:selected').val());
+}
+
+function  selCaseBySearch(){
+	  var param ={
+				testcaseName:$('#caseName').val(),
+				modelId:$('#ModelSelect option:selected').val(),
+		}
+	  selALLCase($('#caseName').val(),$('#ModelSelect option:selected').val());
+      }
+	  
+function deletecaseById(val){
+var param={
+			testcaseId:val,
+			}
+			$.ajax({
+										type : 'POST',
+										url :'back/home/deleteCaseByCaseid',
+										async : false,
+										contentType : "application/json; charset=utf-8",
+										data : JSON.stringify(param),
+										dataType : "json",
+										success : function() {
+											alert('删除成功')
+											selALLCase();
+										}
+								  });
+				 }
+				 
+				 
+function updateCaseByCaseid(val){
+var param={
+			testcaseId:val,
+			testcaseName:$('#caseName1').val(),
+			catalog:$('#catalog').val(),
+			}
+			$.ajax({
+										type : 'POST',
+										url :'back/home/updateCaseByCaseid',
+										async : false,
+										contentType : "application/json; charset=utf-8",
+										data : JSON.stringify(param),
+										dataType : "json",
+										success : function() {
+											alert('修改成功')
+											selALLCase();
+										}
+								  });
+				 }
+				 
+				 
+function insertTestcase(){
+var param={
+			
+			testcaseName:$('#caseNameup').val(),
+			modelId:$('#modelIdup').val(),
+			catalog:$('#catalogup').val(),
+			}
+			$.ajax({
+										type : 'POST',
+										url :'back/home/insertTestcase',
+										async : false,
+										contentType : "application/json; charset=utf-8",
+										data : JSON.stringify(param),
+										dataType : "json",
+										success : function() {
+											alert('新增成功')
+											selALLCase();
+										}
+								  });
+				 }
+ 
+
+
+function selAllModel(){		
+var param={
+       projectId:$('#ProjectSelect option:selected').val()
+			}
+				  $.ajax({
+						type : 'POST',
+						url :'back/Model/selectModelByproid',
+						async : false,
+						contentType : "application/json; charset=utf-8",
+						data : JSON.stringify(param),
+						dataType : "json",
+						success : function(result) {
+						var _html2='';
+							_html2 += "<option value=''>请选择</option>"
+							var _html =' ';
+							result.forEach(function(obj){
+							_html +=  
+							      "<option value='"+obj.modelId+"'>"+obj.modelName+"</option>"
+							});
+							$("#ModelSelect").html(_html2).append(_html);
+						
+						}
+				  });
+			  } 
+			  
+function selAllProject(){		
+var param={
+			}
+				  $.ajax({
+						type : 'POST',
+						url :'back/home1/selectALLProject',
+						async : false,
+						contentType : "application/json; charset=utf-8",
+						data : JSON.stringify(param),
+						dataType : "json",
+						success : function(result) {
+						var _html2='';
+							_html2 += "<option value=''>请选择</option>"
+							var _html =' ';
+							result.forEach(function(obj){
+							_html +=  
+							      "<option value='"+obj.projectId+"'>"+obj.projectName+"</option>"
+							});
+							$("#ProjectSelect").html(_html2).append(_html);
+						
+						}
+				  });
+			  }
+</script>
+</head>
+<body>
+<div id="fsDatatableDiv">
+
+<div class="fs-datatable-form">
+<div id="dtFormId" class="fs-dtForm">
+<form>
+<table>
+<tbody>
+<tr>
+<td><label>项目名称</label></td>
+<td><select id="ProjectSelect" onchange="selAllModel()"></td>
+<td><label>模块名称</label></td>
+<td><select id="ModelSelect"></td>
+<td><label>用例名称</label></td>
+<td><input type="text" id="caseName"/></td>
+<td><input type="button"  value="查询" onclick="selCaseBySearch()"/></td>
+<td><button>重置</button>
+
+</td>
+</tr>
+<tr>
+<td><label>用例名称</label></td>
+<td><input type="text" id="caseName1"/></td>
+<td><label>所属目录</label></td>
+<td><input type="text" id="catalog"/></td>
+<td><button  value="" onclick="insertTestcase()">新增</button></td>
+</tr>
+<tr>
+<td><label>用例名称</label></td>
+<td><input type="text" id="caseNameup"/></td>
+<td><label>所属目录</label></td>   
+<td><input type="text" id="catalogup"/></td>
+<td><label>模块ID</label></td>
+<td><input type="text" id="modelIdup"/></td>
+<td><button  value="" onclick="updateCaseByCaseid()">修改</button></td>
+</tr>
+</tbody>
+</table>
+</form>
+</div>
+</div>
+
+
+<div id="tableList_wrapper">
+<table id="caseALL">
+</div>
+
+<div>
+
+<div>当前显示第<span id="startdata">rere</span>至<span id="lastdata"></span>项，共<span id="totaldata"></span>项</div>
+<div><label>每页
+<select  id="selectV"><option value="5">5</option><option value="10">10</option></select>
+项</label></div>
+
+<div><input type="button" name="" onclick="pagesel(-1)" value="上页"></input>
+<span>第<span>
+<ul id='pageshow'>
+</ul>
+<span>页</span>
+<input type="button" onclick="pagesel(1)"   value="下页"></input>
+</div>
+
+</div>
+
+
+</div>
+</body>
+<style>
+ul li{
+	list-style-type: none;
+}
+
+</style>
+</html>
+
+
