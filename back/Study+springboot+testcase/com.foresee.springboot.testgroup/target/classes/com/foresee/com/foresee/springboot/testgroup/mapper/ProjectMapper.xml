@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.foresee.com.foresee.springboot.testgroup.mapper.ProjectMapper">
+	<resultMap type="com.foresee.com.foresee.springboot.testgroup.dto.Project"
+		id="BaseResultMap">
+		<result jdbcType="VARCHAR" property="projectId" column="project_id" />
+		<result jdbcType="VARCHAR" property="projectName" column="project_name" />
+		<result jdbcType="VARCHAR" property="parentProjectId" column="parent_project_id" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">project_id,project_name,parent_project_id</sql>
+	
+	<select id="selectALLProject" parameterType="com.foresee.com.foresee.springboot.testgroup.dto.Project"
+		resultMap="BaseResultMap">
+		select  
+		<include refid="Base_Column_List" />
+		from project
+		where 1=1  
+	</select>
+	</mapper>

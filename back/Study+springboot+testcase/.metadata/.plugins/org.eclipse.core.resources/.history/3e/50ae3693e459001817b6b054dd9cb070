@@ -1,0 +1,5 @@
+package com.foresee.com.foresee.springboot.testgroup.service;
+
+public class ModelService {
+
+}

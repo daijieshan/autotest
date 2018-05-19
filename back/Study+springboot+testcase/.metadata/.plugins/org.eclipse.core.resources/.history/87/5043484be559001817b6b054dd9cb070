@@ -1,0 +1,20 @@
+package com.foresee.com.foresee.springboot.testgroup.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.foresee.com.foresee.springboot.testgroup.dto.Model;
+import com.foresee.com.foresee.springboot.testgroup.mapper.ModelMapper;
+
+
+@Service("ModelService")
+public class ModelService {
+	@Autowired
+	public  ModelMapper   ModelMapper;
+	
+	public  List  selectALLModel(Model record){
+		return	ModelMapper.selectModelByproid(record);
+		}
+}
