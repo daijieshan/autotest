@@ -78,35 +78,39 @@
 </div>
 
 
-<!--新增弹窗-->
+<!--新增用例弹窗-->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">模态框（Modal）标题</h4>
+                <h4 class="modal-title" id="myModalLabel">新增测试用例</h4>
             </div>
             <div class="modal-body">
             <div>
             <table>
             <tr>
             <td><label>用例名称</label></td>
-         <td><input type="text" id="caseName1"/></td></tr>
+         <td><input type="text" id="caseNameAdd"/></td></tr>
                 <tr>
              <td><label>所属目录</label></td>
-             <td><input type="text" id="catalog"/></td></tr></table>
+             <td><input type="text" id="catalogAdd"/></td></tr>
+              <tr>
+             <td><label>模块id</label></td>
+             <td><input type="text" id="modelIdAdd"/></td></tr>
+             </table>
 
                      </div> </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary" onclick="insertTestcase()" data-dismiss="modal">提交更改</button>
+                <button type="button" class="btn btn-primary" onclick="insertTestcase()" data-dismiss="modal">保存</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
 </div>
 
 
-<!--x修改弹窗-->
+<!--x修改用例弹窗-->
 <div class="modal fade" id="updatecase" tabindex="-1" role="dialog" aria-labelledby="updatecase01" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -120,12 +124,16 @@
             <tr>
             <td><label>用例名称</label></td>
     <td><input type="text" id="caseNameup"/></td>
+            </tr>
+            <tr>
   <td><label>所属目录</label></td>   
   <td><input type="text" id="catalogup"/></td>
-   <td><label>模块ID</label></td>
-    <td><input type="text" id="modelIdup"/></td>
+            </tr>
+             <tr>
+    <td><input type="hidden" id="modelIdup"/></td>
      <td><input type="hidden" id="testcaseId"/></td>
-       </tr></table>
+              </tr>
+              </table>
                      </div> </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -134,6 +142,62 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
 </div>
+
+
+<!--测试用例步骤展示弹窗-->
+<div class="modal fade" id="casestepManager" tabindex="-1" role="dialog" aria-labelledby="casestepManager01" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="casestepManager01">用例步骤编辑</h4>
+            </div>
+            <div class="modal-body">
+            <div>
+            <a  class="btn btn-primary"  data-toggle="modal" data-target="#stepInsertModal">新增</a>
+            <table id="stepContent">
+              </table>
+                     </div> </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+
+<!--新增测试用例步骤弹窗-->
+<div class="modal fade" id="stepInsertModal" tabindex="-1" role="dialog" aria-labelledby="stepInsertModal01" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="stepInsertModal01">新增用例步骤</h4>
+            </div>
+            <div class="modal-body">
+            <div>
+            <table id="stepInsert">
+             <tr><td><label>序号</label></td>  <td><input type="text" id="sort"></input></td></tr>
+            <tr><td><label>步骤名称</label></td>  <td><input type="text" id="addstepName"></input></td></tr>
+      
+            <tr><td><label>选择属性</label></td>  
+            <td><select id="attributeNameSelect"><option value="id">id</option><option value="class">class</option></select></td></tr>
+            <tr><td><label>属性值</label></td>   <td><input type="text" id="addattributeValue"></input></tr>
+             <tr><td><label>操作方法</label></td>  
+            <td><select id="operationMethodSelect"><option value="sendkeys">sendkeys</option><option value="click">click</option></select></td></tr>
+            <tr><td><label>操作值</label></td>   <td><input type="text" id="addoperationValue"></input></tr>
+              </table>
+                     </div> </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" onclick="insertStepBycaseId()" data-dismiss="modal">保存</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+
+
 </body>
 
 </html>

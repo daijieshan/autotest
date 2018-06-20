@@ -17,4 +17,8 @@ public class ProjectService {
 	public  List  selectALLProject(Project record){
 		return	ProjectMapper.selectALLProject(record);
 		}
+	
+	public  List  selectProjectByProjectparId(Project record){
+		return	ProjectMapper.selectProjectByProjectparId(record);
+		}
 }

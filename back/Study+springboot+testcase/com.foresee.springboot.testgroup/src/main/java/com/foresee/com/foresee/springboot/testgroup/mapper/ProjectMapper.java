@@ -10,4 +10,5 @@ import com.foresee.com.foresee.springboot.testgroup.dto.Project;
 @Mapper
 public interface ProjectMapper {
 	 List<Project> selectALLProject(Project record);
+	 List<Project>  selectProjectByProjectparId(Project record);
 }

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.foresee.com.foresee.springboot.testgroup.mapper.TestcasestepMapper">
+<resultMap type="com.foresee.com.foresee.springboot.testgroup.dto.TestcaseStep"
+		id="BaseResultMap">
+		<result jdbcType="VARCHAR" property="stepId" column="step_id" />
+		<result jdbcType="VARCHAR" property="stepName" column="step_name" />
+		<result jdbcType="VARCHAR" property="tagName" column="tag_name" />
+		<result jdbcType="VARCHAR" property="attributeName" column="attribute_name" />
+	    <result jdbcType="VARCHAR" property="attributeValue" column="attribute_value" />
+		<result jdbcType="VARCHAR" property="operationMethod" column="operation_method" />
+		<result jdbcType="VARCHAR" property="operationValue" column="operation_value" />
+		<result jdbcType="VARCHAR" property="testcaseId" column="testcase_id" />
+		<result jdbcType="VARCHAR" property="sort" column="sort" />
+	</resultMap>
+	<sql id="Base_Column_List">step_id, step_name,tag_name,attribute_name,attribute_value,operation_method,operation_value,testcase_id,sort</sql>
+	
+	<select  id="selectStepByCaseId" parameterType="com.foresee.com.foresee.springboot.testgroup.dto.TestcaseStep"
+	resultMap="BaseResultMap">
+	select 
+	<include refid="Base_Column_List" />
+	from testcase_step
+	where 
+	testcase_id=#{testcaseId,jdbcType=VARCHAR}
+	</select>
+	
+	<delete id="deleteStepById" parameterType="java.lang.String">
+	  delete from testcase_step
+	  where step_id=#{stepId,jdbcType=VARCHAR}
+	</delete>
+
+     <insert id="insertStepBycaseId" parameterType="com.foresee.com.foresee.springboot.testgroup.dto.TestcaseStep" >
+     insert into testcase_step(step_id, step_name,tag_name,attribute_name,attribute_value,operation_method,operation_value,testcase_id,sort)
+     values
+	(#{stepId,jdbcType=VARCHAR},#{stepName,jdbcType=VARCHAR},#{tagName,jdbcType=VARCHAR},#{attributeName,jdbcType=VARCHAR},#{attributeValue,jdbcType=VARCHAR},
+	#{operationMethod,jdbcType=VARCHAR},#{operationValue,jdbcType=VARCHAR},#{testcaseId,jdbcType=VARCHAR},#{sort,jdbcType=VARCHAR})
+     </insert>
+     
+     
+</mapper>

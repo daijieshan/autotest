@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="/jquery-1.10.2.js"> </script>
+<script src="bootstrap.min.js"> </script>
+<link href="bootstrap.css" rel="stylesheet"/>
+<script>
+$(function(){
+	selAllProject();
+
+});
+
+function selAllProject(){
+    var param={};
+	param.parentProjectId="00";
+	  $.ajax({
+						type : 'POST',
+						url :'back/home/selectProjectByProjectparId',
+						async : false,
+						contentType : "application/json; charset=utf-8",
+						data :JSON.stringify(param),
+						dataType : "json",
+						success : function(result) {
+							var _html = '';
+							result.forEach(function(obj){
+								if(obj.hasChild == 1){
+							_html +=
+						      "<li><span class=\"treeNode\" onclick=\"selectProjectbyparId('"+obj.projectId+"',this)\" nodeId="+obj.projectId+">"+obj.projectName+"</span></li>"
+							}else{
+								_html +=
+								      "<li><span class=\"treeNode\" nodeId="+obj.projectId+">"+obj.projectName+"</span></li>"
+							}
+							});
+							$("#projectTree").html(_html);	
+							bindSelect();
+						}
+				  });
+}
+
+function  selectProjectbyparId(parentProjectId,objThis){
+	   var param={
+			   parentProjectId:parentProjectId
+	   }
+	   $(".treeNode").removeClass("selectTreeNode");
+	   $(objThis).addClass("selectTreeNode"); 
+	   assignModel();
+	   $.ajax({
+			type : 'POST',
+			url :'back/home/selectProjectByProjectparId',
+			async : false,
+			contentType : "application/json; charset=utf-8",
+			data :JSON.stringify(param),
+			dataType : "json",
+			success : function(result) {
+				var _html = '<ul>';
+				result.forEach(function(obj){
+					if(obj.hasChild == 1){
+						_html +=
+					      "<li><span class=\"treeNode\" onclick=\"selectProjectbyparId('"+obj.projectId+"',this)\" nodeId="+obj.projectName+">"
+					      +obj.projectName+"</span></li>"
+						}else{
+							_html +=
+							      "<li><span class=\"treeNode\" nodeId="+obj.projectId+">"+obj.projectName+"</span></li>"
+						}
+				});
+				_html+="</ul>";
+				if($(objThis).parent("li").children().length<=1){
+				    $(objThis).parent("li").append(_html);
+				}else{
+					$(objThis).parent("li").children("ul").toggle();
+				}
+				bindSelect();
+			
+			}
+	  });
+	}
+	
+	
+	
+function bindSelect(){
+	$(".treeNode").unbind("click");
+	$(".treeNode").bind("click",function(){
+		 $(".treeNode").removeClass("selectTreeNode");
+		 $(this).addClass("selectTreeNode");
+		 assignModel();
+	});
+	
+}
+
+
+function assignModel(){
+	var param={
+			projectId:$(".selectTreeNode").attr("nodeId"),	
+	   }
+	$.ajax({
+		type : 'POST',
+		url :'back/home/selectModelByProjectId',
+		async : false,
+		contentType : "application/json; charset=utf-8",
+		data : JSON.stringify(param),
+		dataType : "json",
+		success : function(result) {
+		
+			var _html = '';
+			result.forEach(function(obj){
+			_html += "<tr>"
+			      +"<td>"+obj.modelId+"<td/>"
+			      +"<td>"+obj.modelName+"<td/>"
+			      +"</tr>"	
+			});
+			$("#allModel").html(_html);	
+			
+		}
+  });
+}
+
+
+
+</script>
+
+
+</head>
+<body>
+<ul id="projectTree"></ul>
+<table  id="allModel" ></table>
+</body>
+</html>
+
+<style>
+.treeNode{
+   display:block;
+   width:25px;
+   background-color:red;
+   border:2px solid yellow;
+}
+.selectTreeNode{
+    background-color:blue;
+}
+</style>

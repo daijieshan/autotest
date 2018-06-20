@@ -25,5 +25,12 @@ public class ProjectContrl {
 		List<Project>  listpro = ProjectService.selectALLProject(repro);
 		return listpro ;
 	}
-
+     
+	@RequestMapping(value = "/selectProjectByProjectparId")
+	@ResponseBody
+	public Object selectProjectByProjectparId(@RequestBody Project repro ){
+		List<Project>  listpro1 = ProjectService.selectProjectByProjectparId(repro);
+		return listpro1 ;
+	}
+	
 }

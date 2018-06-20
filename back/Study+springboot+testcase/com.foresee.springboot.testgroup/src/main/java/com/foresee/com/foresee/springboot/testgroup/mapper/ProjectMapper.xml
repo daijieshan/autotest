@@ -17,4 +17,14 @@
 		from project
 		where 1=1  
 	</select>
+	
+	<select id="selectProjectByProjectparId" parameterType="com.foresee.com.foresee.springboot.testgroup.dto.Project"
+	resultMap="BaseResultMap">
+	select 
+	<include refid="Base_Column_List" />
+	from project
+	where  parent_project_id=#{parentProjectId,jdbcType=VARCHAR}
+	</select>
+	
+	
 	</mapper>

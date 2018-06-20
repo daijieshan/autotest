@@ -1,4 +1,4 @@
-package com.foresee.com.foresee.springboot.testgroup.web;
+package com.foresee.com.foresee.springboot.testgroup.dto;
 
 public class TestcaseStep {
    private String stepId;
@@ -9,6 +9,8 @@ public class TestcaseStep {
    private String  attributeValue;
    private String  operationMethod;
    private String  operationValue;
+   private String  sort;
+   
 public String getStepId() {
 	return stepId;
 }
@@ -56,6 +58,12 @@ public String getOperationValue() {
 }
 public void setOperationValue(String operationValue) {
 	this.operationValue = operationValue;
+}
+public String getSort() {
+	return sort;
+}
+public void setSort(String sort) {
+	this.sort = sort;
 }
 
 

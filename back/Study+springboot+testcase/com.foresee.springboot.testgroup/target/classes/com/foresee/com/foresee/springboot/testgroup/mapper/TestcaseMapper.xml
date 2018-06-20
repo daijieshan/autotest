@@ -55,6 +55,7 @@
 	( #{testcaseId,jdbcType=VARCHAR},#{testcaseName,jdbcType=VARCHAR},#{modelId,jdbcType=VARCHAR},#{catalog,jdbcType=VARCHAR},#{createDate,jdbcType=VARCHAR})
 	</insert>
 	
+	
 	</mapper>
 	
 	
